@@ -1,5 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hearts">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -8,7 +14,7 @@
         android:roundIcon="@drawable/hearts_broken"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen" android:label="Hearts" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
+        <activity android:name=".SplashScreen" android:label="Hearts" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -16,10 +22,22 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainMenu" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
+        <activity android:name=".MainMenu" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".main" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
+        <activity android:name=".main" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
+
+        </activity>
+        <activity android:name=".Network" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
+
+        </activity>
+        <activity android:name=".HostClientSelectionActivity" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
+
+        </activity>
+        <activity android:name=".FirebaseHostClientSelectionActivity" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
+
+        </activity>
+        <activity android:name=".FirebaseNetworkActivity" android:theme="@style/Theme.AppCompat.Dark.NoActionBar.FullScreen"  android:screenOrientation="landscape">
 
         </activity>
     </application>

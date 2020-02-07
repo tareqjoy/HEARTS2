@@ -1,17 +1,16 @@
 package com.example.hearts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainMenu extends Activity {
-    private Button playBtn, rulesBtn, aboutBtn;
+public class MainMenu extends AppCompatActivity {
+    private Button playBtn, rulesBtn, aboutBtn, playWifiBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class MainMenu extends Activity {
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(MainMenu.this, main.class);
+                Intent mainIntent = new Intent(MainMenu.this, FirebaseHostClientSelectionActivity.class);
                 MainMenu.this.startActivity(mainIntent);
 
             }
@@ -53,6 +52,7 @@ public class MainMenu extends Activity {
         playBtn = findViewById(R.id.playButton);
         rulesBtn = findViewById(R.id.rulesButton);
         aboutBtn = findViewById(R.id.aboutButton);
+        playWifiBtn = findViewById(R.id.playWifiButton);
     }
 
     @Override

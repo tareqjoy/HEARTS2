@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Your Device Name: "
+            android:textSize="14dp"
+            android:padding="10dp"
+
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Some Name"
+            android:textSize="14dp"
+            android:padding="10dp"
+            android:id="@+id/hostId"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/info"
+        android:text="Available Devices:" />
+
+    <ListView
+        android:id="@+id/availDevices"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="3dp"
+        android:layout_weight=".6">
+
+    </ListView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Connected Devices:" />
+
+    <ListView
+        android:id="@+id/pairedDevices"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="3dp"
+        android:layout_weight=".4">
+
+
+    </ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+android:scrollbars="vertical"
+        android:id="@+id/log"/>
+    <Button
+
+        android:id="@+id/startGameButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Game"/>
+
+</LinearLayout>

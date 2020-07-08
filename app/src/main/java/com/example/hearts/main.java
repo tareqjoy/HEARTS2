@@ -72,7 +72,7 @@ public class main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        makeFullScreen();
+
 
         mode = getIntent().getStringExtra("mode");
         myUUID = getIntent().getStringExtra("uuid");
@@ -279,8 +279,23 @@ public class main extends AppCompatActivity {
             }
         });
 
+        gameRef.child(codeStr).child("move").child("heartsBroke").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    cardDeck.setHeartsBroken(dataSnapshot.getValue(Boolean.class));
+                } catch (Exception e){
 
-        gameRef.child(codeStr).child("playerPoints").addValueEventListener(new ValueEventListener() {
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        gameRef.child(codeStr).child("move").child("playerPoints").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 HashMap<String, Long> results = (HashMap<String, Long>) dataSnapshot.getValue();
@@ -380,19 +395,26 @@ public class main extends AppCompatActivity {
 
         //Toast.makeText(this,String.valueOf(defaultScoreLayoutTextView.getTextSize()),Toast.LENGTH_SHORT).show();
     }
-/*
-    private PlayerPosition reversePosition(PlayerPosition playerPosition, HashMap<String, Integer> playerIndex) {
-        if (playerPosition == PlayerPosition.LEFT) {
-            return PlayerPosition.values()[playerIndex.size() - 1];
-        } else if (playerPosition == PlayerPosition.RIGHT) {
-            return PlayerPosition.values()[1];
-        } else if (playerPosition == PlayerPosition.STRAIGHT && playerIndex.size() % 2 == 0) {
-            return PlayerPosition.values()[playerIndex.size() / 2];
-        } else {
-            return PlayerPosition.ME;
-        }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        makeFullScreen();
     }
-*/
+
+    /*
+        private PlayerPosition reversePosition(PlayerPosition playerPosition, HashMap<String, Integer> playerIndex) {
+            if (playerPosition == PlayerPosition.LEFT) {
+                return PlayerPosition.values()[playerIndex.size() - 1];
+            } else if (playerPosition == PlayerPosition.RIGHT) {
+                return PlayerPosition.values()[1];
+            } else if (playerPosition == PlayerPosition.STRAIGHT && playerIndex.size() % 2 == 0) {
+                return PlayerPosition.values()[playerIndex.size() / 2];
+            } else {
+                return PlayerPosition.ME;
+            }
+        }
+    */
     private void makeFullScreen() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

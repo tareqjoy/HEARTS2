@@ -3,6 +3,9 @@ package com.example.hearts;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -39,6 +42,8 @@ public class CardDeckLayout extends RelativeLayout {
     private final double totalAng = 60.0, totalW = pxFromDp(700);
     private boolean myDeckLocked = false;
     private final long animationTime = 250;
+    private boolean heartsBroken = false;
+    private int[] sounds;
     //  private final double totalW=
 
     private Queue<GameInstanceVariable> gameInstance = new LinkedList<>();
@@ -49,10 +54,11 @@ public class CardDeckLayout extends RelativeLayout {
     private TextView messageTextView;
     private CardDeck cardDeck;
     private ImageView cardOnTableImageView[] = new ImageView[4];
-//    private ImageView playerTypingImageView[];
+
+    //    private ImageView playerTypingImageView[];
     private TextView[] playerNameTextView;
 
-
+    private SoundPool soundPool;
     // private FirebaseActivty writePassedCards;
     private Card cardToMove;
 
@@ -65,7 +71,7 @@ public class CardDeckLayout extends RelativeLayout {
                 final ImageView img1 = (ImageView) v;
                 final Card selectedCard = (Card) img1.getTag();
                 if (gameState == GameState.PASS && playerState == PlayerState.GIVE) {
-
+                    soundPool.play(sounds[0], 1,1,1,0,1f);
                     final ImageView img2 = getAvailableSpaceInPass();
 
                     Animation.AnimationListener listener = new Animation.AnimationListener() {
@@ -96,11 +102,8 @@ public class CardDeckLayout extends RelativeLayout {
                 } else if (gameState == GameState.RUNNING && playerPosition == PlayerPosition.ME && playerState == PlayerState.GIVE) {
 
                     if (cardOnTableImageView[0].getDrawable() == null) {
-                        if ((cardDeck.contains(new Card(CardType.CLUB, CardNumber.c2)) && selectedCard.equals(new Card(CardType.CLUB, CardNumber.c2)))
-                                || (!cardDeck.contains(new Card(CardType.CLUB, CardNumber.c2)) &&
-                                (cardToMove.getType() == selectedCard.getType() || !cardDeck.hasType(cardToMove.getType())))) {
-
-
+                        if (img1.getColorFilter() == null) { //null means this card can be playable
+                            soundPool.play(sounds[0], 1,1,1,0,1f);
                             movedCardCallback.onComplete((Card) img1.getTag());
                             Animation.AnimationListener listener = new Animation.AnimationListener() {
                                 @Override
@@ -138,6 +141,7 @@ public class CardDeckLayout extends RelativeLayout {
         public void onClick(View v) { //cards on passCardDeck, pass those to Me
             final ImageView img1 = (ImageView) v;
             if (gameState == GameState.PASS && playerState == PlayerState.GIVE && img1.getDrawable() != null) {
+                soundPool.play(sounds[0], 1,1,1,0,1f);
                 final ImageView img2 = getAvailableSpaceInDeck((Card) img1.getTag());
                 Animation.AnimationListener listener = new Animation.AnimationListener() {
                     @Override
@@ -164,6 +168,7 @@ public class CardDeckLayout extends RelativeLayout {
                 }
             } else if (gameState == GameState.PASS && playerState == PlayerState.TAKE && img1.getDrawable() != null) {
                 final ImageView img2 = getAvailableSpaceInDeck((Card) img1.getTag());
+                soundPool.play(sounds[1], 1,1,1,0,1f);
                 Animation.AnimationListener listener = new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
@@ -216,7 +221,6 @@ public class CardDeckLayout extends RelativeLayout {
             }
         }
     };
-
 
 
     public void passCardFromMe(PassCardSelectedCallback callback, PlayerPosition direction) {
@@ -312,15 +316,23 @@ public class CardDeckLayout extends RelativeLayout {
             doMakeTint(card);
         } else if (gameState == GameState.RUNNING && playerPosition == PlayerPosition.ME && playerState == PlayerState.TAKE) {
             //getting all card from the table
-
+            soundPool.play(sounds[1], 1,1,1,0,1f);
         } else if (gameState == GameState.RUNNING && playerState == PlayerState.WAIT) {
             //other player gave card to table
-
+            soundPool.play(sounds[0], 1,1,1,0,1f);
             doMoveCard(playerPosition, card);
         } else if (gameState == GameState.RUNNING && playerState == PlayerState.GIVE_ALL) {
+            soundPool.play(sounds[1], 1,1,1,0,1f);
             doGetAllCard(playerPosition);
         }
 
+    }
+
+    public void setHeartsBroken(boolean heartsBroken) {
+        this.heartsBroken = heartsBroken;
+        if(heartsBroken){
+            soundPool.play(sounds[2], 1,1,1,0,1f);
+        }
     }
 
     public CardDeckLayout(Context context) {
@@ -343,7 +355,6 @@ public class CardDeckLayout extends RelativeLayout {
     }
 
 
-
     private void init() {
         inflate(getContext(), R.layout.cards_layout, this);
 
@@ -364,6 +375,7 @@ public class CardDeckLayout extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (gameState == GameState.PASS && playerState == PlayerState.GIVE) {
+                    soundPool.play(sounds[1], 1,1,1,0,1f);
                     ArrayList<String> cards = getSelectedCardsForPass();
                     if (cards != null && cards.size() == 3) {
                         passCardSelectedCallback.onComplete(cards);
@@ -371,6 +383,7 @@ public class CardDeckLayout extends RelativeLayout {
 
                     }
                 } else if (gameState == GameState.PASS && playerState == PlayerState.TAKE) {
+                    soundPool.play(sounds[1], 1,1,1,0,1f);
                     for (int i = 0; i < passCardContainer.getChildCount(); i++) {
                         ImageView img = (ImageView) passCardContainer.getChildAt(i);
                         img.callOnClick();
@@ -380,6 +393,19 @@ public class CardDeckLayout extends RelativeLayout {
         });
 
         updateLayout();
+
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        soundPool=new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+
+        sounds=new int[3];
+        sounds[0]=soundPool.load(getContext(),R.raw.card_given,1);
+        sounds[1]=soundPool.load(getContext(),R.raw.get_card,1);
+        sounds[2]=soundPool.load(getContext(),R.raw.heart_break,1);
     }
 
 /*    public void setMyMove(Card c) {
@@ -503,6 +529,16 @@ public class CardDeckLayout extends RelativeLayout {
                     }
                 }
             }
+        } else if (card != null && card.getType() == CardType.ANY) {
+            for (int i = 0; i < cardContainer.getChildCount(); i++) {
+                ImageView img = (ImageView) cardContainer.getChildAt(i);
+                Card imgCard = (Card) img.getTag();
+
+                if ((imgCard.getType() == CardType.HEART && !heartsBroken && !cardDeck.allSameTypeCard(CardType.HEART))) {
+                    img.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBlackTransparent));
+                }
+
+            }
         }
     }
 
@@ -547,6 +583,11 @@ public class CardDeckLayout extends RelativeLayout {
         return null;
     }
 
+    public void clearTable() {
+        for (int i = 0; i < cardOnTableImageView.length; i++) {
+            cardOnTableImageView[i].setImageDrawable(null);
+        }
+    }
 
     public double pxFromDp(final double dp) {
         return dp * getContext().getResources().getDisplayMetrics().density;

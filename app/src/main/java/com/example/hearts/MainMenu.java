@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainMenu extends AppCompatActivity {
-    private Button playBtn, rulesBtn, aboutBtn, playWifiBtn;
+    private Button playBtn, rulesBtn, aboutBtn, playBotBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +35,9 @@ public class MainMenu extends AppCompatActivity {
                 Toast.makeText(MainMenu.this, "Developed by Tareq Rahman Joy,CSE, KUET! Thanks for playing :)", Toast.LENGTH_LONG).show();
             }
         });
+
+
+
     }
 
     private void initPlayBtnOnClickActions() {
@@ -52,7 +55,7 @@ public class MainMenu extends AppCompatActivity {
         playBtn = findViewById(R.id.playButton);
         rulesBtn = findViewById(R.id.rulesButton);
         aboutBtn = findViewById(R.id.aboutButton);
-        playWifiBtn = findViewById(R.id.playWifiButton);
+        playBotBtn = findViewById(R.id.playBotButton);
     }
 
     @Override

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "48664049089",
+    "firebase_url": "https://hearts2-f1aeb.firebaseio.com",
+    "project_id": "hearts2-f1aeb",
+    "storage_bucket": "hearts2-f1aeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48664049089:android:fa160f679544ebe69aab40",
+        "android_client_info": {
+          "package_name": "com.example.hearts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48664049089-venduf39h90un268mir6859pqeslh9ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hearts",
+            "certificate_hash": "9cf136b05d1e7b4ac3496f33c92f3249c9586e07"
+          }
+        },
+        {
+          "client_id": "48664049089-lh69tj4tro95idm25uer6ld6jmq61v0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC7oIjeXIe5gVEMHVSxscHw6guQ4zgNd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48664049089-lh69tj4tro95idm25uer6ld6jmq61v0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

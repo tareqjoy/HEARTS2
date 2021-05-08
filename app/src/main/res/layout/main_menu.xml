@@ -16,7 +16,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/playWifiButton"
+                android:id="@+id/playBotButton"
                 android:minWidth="170dp"
                 android:text="PLAY With Bots"/>
             <Button
